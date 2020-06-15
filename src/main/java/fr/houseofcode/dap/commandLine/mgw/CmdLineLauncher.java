@@ -9,6 +9,11 @@ import org.apache.logging.log4j.Logger;
 /** @author mgw **/
 public final class CmdLineLauncher {
 
+    //TODO MGW by Djer |Command Line| Ton singleton n'est pas utile, car il n'est pas utilsé  : Java lance juste "main(...)" et cette méthode n'utilise pas ton singleton.
+    //Ce n'est pas ié©al de "tout codé dans du code static (comme main(...)" c'est pour cela que l'on a la classe "Serverutils".
+    //Si tu veux encore limiter le code il te faudrait une autre classe (par exemmple "Appli") qui contiendrait tout ton code qui est actuellement dans la méthdoe "main(...)" dans une méthode "start" (par exemple).
+    //la méthdoe Main de ton Launcher ne ferait que créer une instance de "Appli" puis executer la méthdoe "start()".
+    // On trovue souvent sur internet des "Launcher" avec cette méthdoe "start" dans le même fichier, ce qui est une bonne façon de faire, mais n'aide pas à  comprendre le fonctionnement (surtout quand on débute).
     /** Singleton. */
     private static CmdLineLauncher instance;
 
@@ -30,9 +35,11 @@ public final class CmdLineLauncher {
         return instance;
     }
 
+    //TODO MGW by Djer |JavaDoc| Ce commentaire n'est pas juste.
     /**
     * @param args
     */
+    //TODO MGW by Djer |POO| Cette constante devrait être en début de classe. Ordre attendu : constantes, attributs, intialisateurs statics, constrcuteurs, méthodes métier, méthodes utilitaires (toString, hashCode,..), getter/setters
     private static final Logger LOG = LogManager.getLogger();
 
     /**
@@ -45,6 +52,7 @@ public final class CmdLineLauncher {
         ServerUtils su = new ServerUtils();
         LOG.debug("Debut du main avec comme arguments :  " + args);
 
+        //TODO MGW by Djer |Command Line| Pour Eviter un "ArrayOutOfBoundException" tu devrais vérifier qu'il y a le bon nombre de paramètres (+message d'erreur utilsiateur)
         String choixUserKey = args[0];
         String nbemails = su.getUnreadedMail(choixUserKey);
         String displayLabel = su.getLabels(choixUserKey);
